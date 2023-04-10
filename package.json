@@ -18,6 +18,7 @@
     "@mailchimp/mailchimp_marketing": "^3.0.58",
     "@mdx-js/loader": "^2.3.0",
     "@mdx-js/react": "^2.3.0",
+    "@mui/icons-material": "^5.11.16",
     "@mui/material": "^5.11.16",
     "@next/bundle-analyzer": "^12.1.4",
     "@next/mdx": "^13.3.0",

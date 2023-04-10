@@ -1,21 +1,20 @@
 import PageTitle from '@/components/PageTitle'
-import { getFileBySlug } from '@/lib/mdx'
-import ProjectDetailCard from '@/components/ProjectDetail'
-import PostLayout from '../../layouts/PostLayout'
+import { getApplicationById } from '@/lib/mdx'
+import ApplicationDetailCard from '@/components/application/applicationDetail'
 export async function getServerSideProps(context) {
   const token = context.req.cookies['GradPanelJWT']
   const params = context.params
 
-  const post = await getFileBySlug(token, params.projectId)
-
+  const post = await getApplicationById(token, params.applicationId)
+  console.log(post)
   return { props: { post, token } }
 }
 
-export default function Project({ post, token }) {
+export default function ApplicationDetail({ post, token }) {
   return (
     <>
       {post != null ? (
-        <PostLayout frontMatter={post} token={token} />
+        <ApplicationDetailCard application={post} token={token} />
       ) : (
         <div className="mt-24 text-center">
           <PageTitle>

@@ -1,13 +1,11 @@
 import Link from '@/components/Link'
 import PageTitle from '@/components/PageTitle'
 import SectionContainer from '@/components/SectionContainer'
-import { BlogSEO } from '@/components/SEO'
 import Image from '@/components/Image'
-import Tag from '@/components/Tag'
 import siteMetadata from '@/data/siteMetadata'
-import Comments from '@/components/comments'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
-
+import { useState } from 'react'
+import UpdateProjectModal from '../components/modals/project/updateModal'
 const editUrl = (fileName) => `${siteMetadata.siteRepo}/blob/master/data/blog/${fileName}`
 const discussUrl = (slug) =>
   `https://mobile.twitter.com/search?q=${encodeURIComponent(
@@ -16,17 +14,21 @@ const discussUrl = (slug) =>
 
 const postDateTemplate = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
 
-export default function PostLayout({ frontMatter, authorDetails, next, prev, children }) {
-  const { slug, fileName, date, title, images, tags } = frontMatter
-
+export default function PostLayout({ frontMatter, token }) {
+  const { slug, Profile } = frontMatter
+  const [open, setOpen] = useState(false)
+  const handleOpen = () => setOpen(true)
+  const handleClose = () => setOpen(false)
   return (
     <SectionContainer>
-      <BlogSEO
-        url={`${siteMetadata.siteUrl}/blog/${slug}`}
-        authorDetails={authorDetails}
-        {...frontMatter}
-      />
       <ScrollTopAndComment />
+      <UpdateProjectModal
+        open={open}
+        handleClose={handleClose}
+        project={frontMatter}
+        token={token}
+      />
+
       <article>
         <div className="xl:divide-y xl:divide-gray-200 xl:dark:divide-gray-700">
           <header className="pt-6 xl:pb-6">
@@ -35,14 +37,17 @@ export default function PostLayout({ frontMatter, authorDetails, next, prev, chi
                 <div>
                   <dt className="sr-only">Published on</dt>
                   <dd className="text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
-                    <time dateTime={date}>
-                      {new Date(date).toLocaleDateString(siteMetadata.locale, postDateTemplate)}
+                    <time dateTime={frontMatter.CreatedAt}>
+                      {new Date(frontMatter.CreatedAt).toLocaleDateString(
+                        siteMetadata.locale,
+                        postDateTemplate
+                      )}
                     </time>
                   </dd>
                 </div>
               </dl>
               <div>
-                <PageTitle>{title}</PageTitle>
+                <PageTitle>{frontMatter.title}</PageTitle>
               </div>
             </div>
           </header>
@@ -51,97 +56,91 @@ export default function PostLayout({ frontMatter, authorDetails, next, prev, chi
             style={{ gridTemplateRows: 'auto 1fr' }}
           >
             <dl className="pt-6 pb-10 xl:border-b xl:border-gray-200 xl:pt-11 xl:dark:border-gray-700">
-              <dt className="sr-only">Authors</dt>
               <dd>
                 <ul className="flex justify-center space-x-8 sm:space-x-12 xl:block xl:space-x-0 xl:space-y-8">
-                  {authorDetails.map((author) => (
-                    <li className="flex items-center space-x-2" key={author.name}>
-                      {author.avatar && (
-                        <Image
-                          src={author.avatar}
-                          width="38px"
-                          height="38px"
-                          alt="avatar"
-                          className="h-10 w-10 rounded-full"
-                        />
-                      )}
-                      <dl className="whitespace-nowrap text-sm font-medium leading-5">
-                        <dt className="sr-only">Name</dt>
-                        <dd className="text-gray-900 dark:text-gray-100">{author.name}</dd>
-                        <dt className="sr-only">Twitter</dt>
-                        <dd>
-                          {author.twitter && (
-                            <Link
-                              href={author.twitter}
-                              className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
-                            >
-                              {author.twitter.replace('https://twitter.com/', '@')}
-                            </Link>
-                          )}
-                        </dd>
-                      </dl>
-                    </li>
-                  ))}
+                  <li className="flex items-center space-x-2" key={Profile.ID}>
+                    {Profile.profileImage && (
+                      <Image
+                        src={Profile.profileImage}
+                        width="38px"
+                        height="38px"
+                        alt="avatar"
+                        className="h-10 w-10 rounded-full"
+                      />
+                    )}
+                    <dl className="whitespace-nowrap text-sm font-medium leading-5">
+                      <dt className="sr-only">Name</dt>
+                      <dd className="text-gray-900 dark:text-gray-100">
+                        {Profile.firstName + ' ' + Profile.lastName}
+                      </dd>
+                      <dt className="sr-only">Twitter</dt>
+                      <dd>
+                        {Profile.twitter && (
+                          <Link
+                            href={Profile.twitter}
+                            className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
+                          >
+                            {Profile.twitter.replace('https://twitter.com/', '@')}
+                          </Link>
+                        )}
+                      </dd>
+                    </dl>
+                  </li>
                 </ul>
               </dd>
             </dl>
             <div className="divide-y divide-gray-200 dark:divide-gray-700 xl:col-span-3 xl:row-span-2 xl:pb-0">
-              <div className="prose max-w-none pt-10 pb-8 dark:prose-dark">{children}</div>
-              <div className="pt-6 pb-6 text-sm text-gray-700 dark:text-gray-300">
-                <Link href={discussUrl(slug)} rel="nofollow">
-                  {'Discuss on Twitter'}
-                </Link>
-                {` • `}
-                <Link href={editUrl(fileName)}>{'View on GitHub'}</Link>
+              <div className="prose max-w-none pt-10 pb-8 dark:prose-dark">
+                {frontMatter.description}
               </div>
-              <Comments frontMatter={frontMatter} />
+              <div className="flex flex-col">
+                <div className="flex items-center">
+                  <span className="font-ibm text-sm font-bold text-gray-500">
+                    Sources for the project
+                  </span>
+                </div>
+                <span className="font-ibm text-sm text-gray-500 ">
+                  <ul className="ml-10 list-decimal">
+                    {frontMatter.Source &&
+                      frontMatter.Source.map((s, index) => {
+                        return <li key={index}>{s.link}</li>
+                      })}
+                  </ul>
+                </span>
+              </div>
+              <div className="flex flex-col">
+                <div className="flex items-center">
+                  <span className="font-ibm text-sm font-bold text-gray-500">
+                    Instructor’s requirements for the project
+                  </span>
+                </div>
+                <span className="font-ibm text-sm text-gray-500 ">
+                  <ul className="ml-10 list-decimal	">
+                    {frontMatter.Requirement &&
+                      frontMatter.Requirement.map((s, index) => {
+                        return <li key={index}>{s.description}</li>
+                      })}
+                  </ul>
+                </span>
+              </div>
             </div>
             <footer>
-              <div className="divide-gray-200 text-sm font-medium leading-5 dark:divide-gray-700 xl:col-start-1 xl:row-start-2 xl:divide-y">
-                {tags && (
-                  <div className="py-4 xl:py-8">
-                    <h2 className="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
-                      Tags
-                    </h2>
-                    <div className="flex flex-wrap">
-                      {tags.map((tag) => (
-                        <Tag key={tag} text={tag} />
-                      ))}
-                    </div>
-                  </div>
-                )}
-                {(next || prev) && (
-                  <div className="flex justify-between py-4 xl:block xl:space-y-8 xl:py-8">
-                    {prev && (
-                      <div>
-                        <h2 className="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
-                          Previous Article
-                        </h2>
-                        <div className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400">
-                          <Link href={`/blog/${prev.slug}`}>{prev.title}</Link>
-                        </div>
-                      </div>
-                    )}
-                    {next && (
-                      <div>
-                        <h2 className="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
-                          Next Article
-                        </h2>
-                        <div className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400">
-                          <Link href={`/blog/${next.slug}`}>{next.title}</Link>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                )}
-              </div>
               <div className="pt-4 xl:pt-8">
                 <Link
-                  href="/blog"
+                  href="/projects"
                   className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
                 >
-                  &larr; Back to the blog
+                  &larr; Back to the projects
                 </Link>
+              </div>
+              <div className="flex flex-col items-center">
+                <button
+                  type="button"
+                  onClick={handleOpen}
+                  className="mx-auto mt-5 w-1/3 transform rounded bg-gray-700 py-2 px-4 font-medium uppercase text-white shadow transition hover:-translate-y-0.5 hover:bg-gray-800 hover:shadow-lg"
+                >
+                  Edit
+                </button>
               </div>
             </footer>
           </div>

@@ -20,12 +20,12 @@ export default function ProfileCard({ data, isInstructor }) {
   return (
     <div className="p-16">
       <UpdateProfileModal open={open} handleClose={handleClose} profile={data} />
-      <div className="mt-24 bg-gray-100 p-8 shadow">
+      <div className="mt-24 p-8 ">
         <div className="relative">
           <div className="flex flex-col">
-            <div className="absolute inset-x-0 top-0 mx-auto -mt-24 flex h-48 w-48 items-center justify-center rounded-full bg-indigo-100 text-indigo-500 shadow-2xl">
+            <div className="absolute inset-x-0 top-0 mx-auto -mt-24 flex h-36 w-36 items-center justify-center rounded-full bg-indigo-100 text-indigo-500 shadow-2xl">
               <Image
-                className="mb-3 h-32 w-32 rounded-full shadow-lg "
+                className="mb-3 h-24 w-24 rounded-full shadow-lg "
                 src={data.profileImage}
                 alt="Profile image"
                 layout="fill"
@@ -43,7 +43,7 @@ export default function ProfileCard({ data, isInstructor }) {
             Edit
           </button>
 
-          <h1 className="text-4xl font-medium text-gray-700">
+          <h1 className="text-center text-4xl text-gray-700">
             {data.firstName} {data.lastName}
           </h1>
           <span className="font-light text-gray-500"> {data.number} </span>
