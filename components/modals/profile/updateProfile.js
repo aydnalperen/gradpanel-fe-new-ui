@@ -1,11 +1,7 @@
 import * as React from 'react'
 import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
-import Typography from '@mui/material/Typography'
 import Modal from '@mui/material/Modal'
-import Profile from '../../../pages/instructor/profile'
-import ProfileCard from '../../profile'
-import { TextareaAutosize, TextField } from '@mui/material'
+import { TextField } from '@mui/material'
 
 const style = {
   position: 'absolute',

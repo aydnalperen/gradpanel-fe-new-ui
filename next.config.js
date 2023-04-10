@@ -55,6 +55,9 @@ const securityHeaders = [
 module.exports = withBundleAnalyzer({
   reactStrictMode: true,
   pageExtensions: ['js', 'jsx', 'md', 'mdx'],
+  images: {
+    domains: ['flowbite.s3.amazonaws.com', 'flowbite.com', 'images.unsplash.com'],
+  },
   eslint: {
     dirs: ['pages', 'components', 'lib', 'layouts', 'scripts'],
   },

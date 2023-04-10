@@ -9,7 +9,6 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: '%100',
   bgcolor: 'background.paper',
   border: '2px solid #000',
   boxShadow: 24,
@@ -133,7 +132,12 @@ export default function UpdateProjectModal({ open, handleClose, project, token }
     return response
   }
   return (
-    <div>
+    <div
+      id="defaultModal"
+      tabIndex="-1"
+      aria-hidden="true"
+      className="fixed top-0 left-0 right-0 z-50 hidden h-[calc(100%-1rem)] w-full overflow-y-auto overflow-x-hidden p-4 md:inset-0 md:h-full"
+    >
       <Modal
         open={open}
         onClose={handleClose}
