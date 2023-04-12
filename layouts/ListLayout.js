@@ -1,10 +1,12 @@
 import Link from '@/components/Link'
 import Tag from '@/components/Tag'
 import siteMetadata from '@/data/siteMetadata'
+import Select, { SelectChangeEvent } from '@mui/material/Select'
 import { useState } from 'react'
 import Pagination from '@/components/Pagination'
 import formatDate from '@/lib/utils/formatDate'
-import CategoryDropDown from '@/components/Category'
+import MenuItem from '@mui/material/MenuItem'
+import InputLabel from '@mui/material/InputLabel'
 
 export default function ListLayout({
   posts,
@@ -17,12 +19,11 @@ export default function ListLayout({
   const [searchCategory, setSearchCategory] = useState('')
   const [searchInstructor, setSearchInstructor] = useState('')
   const filteredBlogPosts = posts.filter((frontMatter) => {
-    const searchContent = frontMatter.title + frontMatter.description
-
-    return (
-      searchContent.toLowerCase().includes(searchValue.toLowerCase()) &&
-      frontMatter.Category.type.includes(searchCategory)
-    )
+    const searchContent = frontMatter.title + frontMatter.description + frontMatter.Category.type
+    const isSearchValueMatched = searchContent.toLowerCase().includes(searchValue.toLowerCase())
+    const isSearchCategoryMatched =
+      searchCategory === '' || frontMatter.Category.type === searchCategory
+    return isSearchValueMatched && isSearchCategoryMatched
   })
 
   // If initialDisplayPosts exist, display it if no searchValue is specified
@@ -61,18 +62,46 @@ export default function ListLayout({
               </svg>
             </div>
             <div className="mt-5">
-              <CategoryDropDown
-                categories={categories}
-                category={searchCategory}
-                setCategory={setSearchCategory}
-              />
+              <InputLabel id="demo-simple-select-label">Category</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={searchCategory}
+                label="Category"
+                onChange={(e) => {
+                  setSearchCategory(e.target.value)
+                }}
+              >
+                <MenuItem value={''}>All</MenuItem>
+                {categories.map((c, index) => {
+                  return (
+                    <MenuItem key={index} value={c.type}>
+                      {c.type}
+                    </MenuItem>
+                  )
+                })}
+              </Select>
             </div>
             <div className="mt-5">
-              <CategoryDropDown
-                categories={categories}
-                category={searchInstructor}
-                setCategory={setSearchInstructor}
-              />
+              <InputLabel id="demo-simple-select-label-2">Instructor</InputLabel>
+              <Select
+                labelId="demo-simple-select-label-2"
+                id="demo-simple-select-2"
+                value={searchInstructor}
+                label="Instructor"
+                onChange={(e) => {
+                  setSearchInstructor(e.target.value)
+                }}
+              >
+                <MenuItem value={''}>All</MenuItem>
+                {categories.map((c, index) => {
+                  return (
+                    <MenuItem key={index} value={c.type}>
+                      {c.type}
+                    </MenuItem>
+                  )
+                })}
+              </Select>
             </div>
           </div>
         </div>
