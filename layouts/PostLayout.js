@@ -6,6 +6,11 @@ import siteMetadata from '@/data/siteMetadata'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
 import { useState } from 'react'
 import UpdateProjectModal from '../components/modals/project/updateModal'
+import MeetingCard from '@/components/startedProject/meetingCard'
+import AccessLinksCard from '@/components/startedProject/accessLinksCard'
+import NotesCard from '@/components/notes/notesCard'
+import ProgressCard from '@/components/startedProject/progressCard'
+import CommentsSection from '@/components/startedProject/comments'
 const editUrl = (fileName) => `${siteMetadata.siteRepo}/blob/master/data/blog/${fileName}`
 const discussUrl = (slug) =>
   `https://mobile.twitter.com/search?q=${encodeURIComponent(
@@ -14,7 +19,7 @@ const discussUrl = (slug) =>
 
 const postDateTemplate = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
 
-export default function PostLayout({ frontMatter, token }) {
+export default function PostLayout({ frontMatter, token, isActive }) {
   const { slug, Profile } = frontMatter
   const [open, setOpen] = useState(false)
   const handleOpen = () => setOpen(true)
@@ -123,6 +128,15 @@ export default function PostLayout({ frontMatter, token }) {
                   </ul>
                 </span>
               </div>
+              {isActive && (
+                <>
+                  <MeetingCard isInstructor={true} />
+                  <AccessLinksCard />
+                  <NotesCard />
+                  <ProgressCard isInstructor={true} />
+                  <CommentsSection />
+                </>
+              )}
             </div>
             <footer>
               <div className="pt-4 xl:pt-8">

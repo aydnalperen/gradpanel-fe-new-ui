@@ -3,7 +3,7 @@ import Image from 'next/image'
 export default function CommentsSection() {
   return (
     <section className="bg-white py-8 dark:bg-gray-900 lg:py-16">
-      <div className="mx-auto max-w-2xl px-4">
+      <div className="mx-auto max-w-2xl">
         <div className="mb-6 flex items-center justify-between">
           <h2 className="text-lg font-bold text-gray-900 dark:text-white lg:text-2xl">
             Comments (2)
@@ -37,9 +37,9 @@ export default function CommentsSection() {
                   className="mr-2 h-6 w-6 rounded-full"
                   src="https://flowbite.com/docs/images/people/profile-picture-2.jpg"
                   alt="Michael Gough"
-                  width={100}
-                  height={100}
-                />
+                  width={60}
+                  height={60}
+                />{' '}
                 Alperen Aydın{' '}
               </p>
 
@@ -87,8 +87,8 @@ export default function CommentsSection() {
                   className="mr-2 h-6 w-6 rounded-full"
                   src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
                   alt="Jese Leos"
-                  width={100}
-                  height={100}
+                  width={60}
+                  height={60}
                 />
                 Gökalp Akartepe{' '}
               </p>

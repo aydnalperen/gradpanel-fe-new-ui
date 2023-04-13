@@ -14,7 +14,7 @@ export default function ActiveProject({ project, token }) {
   return (
     <>
       {project != null ? (
-        <PostLayout frontMatter={project} token={token} />
+        <PostLayout frontMatter={project} token={token} isActive={true} />
       ) : (
         <div className="mt-24 text-center">
           <PageTitle>
