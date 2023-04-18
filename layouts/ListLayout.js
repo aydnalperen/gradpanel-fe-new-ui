@@ -24,16 +24,20 @@ export default function ListLayout({
   const [searchCategory, setSearchCategory] = useState('')
   const [searchInstructor, setSearchInstructor] = useState('')
   const filteredBlogPosts = posts.filter((frontMatter) => {
-    const searchContent = frontMatter.title + frontMatter.description + frontMatter.Category.type
-    const isSearchValueMatched = searchContent.toLowerCase().includes(searchValue.toLowerCase())
+    const searchContent = frontMatter.title + frontMatter.description
+    const isSearchValueMatched =
+      searchValue === '' || searchContent.toLowerCase().includes(searchValue.toLowerCase())
     const isSearchCategoryMatched =
-      searchCategory === '' || frontMatter.Category.type === searchCategory
+      searchCategory === '' ||
+      (frontMatter.Category && frontMatter.Category.type === searchCategory)
     return isSearchValueMatched && isSearchCategoryMatched
   })
 
   // If initialDisplayPosts exist, display it if no searchValue is specified
   const displayPosts =
-    initialDisplayPosts.length > 0 && !searchValue ? initialDisplayPosts : filteredBlogPosts
+    initialDisplayPosts.length > 0 && !searchValue && !searchCategory
+      ? initialDisplayPosts
+      : filteredBlogPosts
 
   return (
     <>
@@ -124,7 +128,7 @@ export default function ListLayout({
         </div>
 
         <ul>
-          {!filteredBlogPosts.length && 'No posts found.'}
+          {!filteredBlogPosts.length && 'No projects found.'}
           {displayPosts.map((frontMatter) => {
             const { ID, CreatedAt, title, description, Profile, Category } = frontMatter
             return (

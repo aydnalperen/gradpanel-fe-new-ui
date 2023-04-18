@@ -22,6 +22,7 @@ const style = {
 }
 
 export default function AddProjectModal({ open, categories, handleClose, token }) {
+  console.log(categories)
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const [capacity, setCapacity] = useState('0')
@@ -103,7 +104,7 @@ export default function AddProjectModal({ open, categories, handleClose, token }
                 <MenuItem value={''}>All</MenuItem>
                 {categories.map((c, index) => {
                   return (
-                    <MenuItem key={index} value={c.type}>
+                    <MenuItem key={index} value={c}>
                       {c.type}
                     </MenuItem>
                   )

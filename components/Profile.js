@@ -69,7 +69,7 @@ export default function ProfileCard({ data, isInstructor }) {
                   {index + 1}
                 </span>
                 {f.title}
-                <button className="focus:shadow-outline mr-2 inline-flex h-10 w-10 items-center justify-center rounded-full bg-white text-gray-700 transition-colors duration-150 hover:bg-gray-200">
+                <button className="ml-2 transform rounded bg-gray-700 p-2 font-medium text-white shadow transition hover:-translate-y-0.5 hover:bg-gray-800 hover:shadow-lg">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
