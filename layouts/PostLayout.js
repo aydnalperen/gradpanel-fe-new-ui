@@ -11,7 +11,7 @@ import AccessLinksCard from '@/components/startedProject/accessLinksCard'
 import NotesCard from '@/components/notes/notesCard'
 import ProgressCard from '@/components/startedProject/progressCard'
 import CommentsSection from '@/components/startedProject/comments'
-
+import ApplicationsTable from '@/components/application'
 const postDateTemplate = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
 
 export default function PostLayout({ frontMatter, token, isActive }) {
@@ -90,6 +90,9 @@ export default function PostLayout({ frontMatter, token, isActive }) {
               </dd>
             </dl>
             <div className="divide-y divide-gray-200 dark:divide-gray-700 xl:col-span-3 xl:row-span-2 xl:pb-0">
+              <div className=" max-w-none pt-5 pb-5 dark:prose-dark">
+                Number of students: {frontMatter.capacity}
+              </div>
               <div className="prose max-w-none pt-10 pb-8 dark:prose-dark">
                 {frontMatter.description}
               </div>
@@ -155,6 +158,7 @@ export default function PostLayout({ frontMatter, token, isActive }) {
               </div>
             </footer>
           </div>
+          <ApplicationsTable data={frontMatter.Application} role="instructor" />
         </div>
       </article>
     </SectionContainer>

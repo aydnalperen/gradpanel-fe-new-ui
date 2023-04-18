@@ -13,10 +13,10 @@ export async function getServerSideProps(context) {
     totalPages: Math.ceil(posts.length / POSTS_PER_PAGE),
   }
 
-  return { props: { initialDisplayPosts, posts, pagination, categories } }
+  return { props: { initialDisplayPosts, posts, pagination, categories, token } }
 }
 
-export default function Projects({ posts, initialDisplayPosts, pagination, categories }) {
+export default function Projects({ posts, initialDisplayPosts, pagination, categories, token }) {
   return (
     <>
       <ListLayout
@@ -25,6 +25,7 @@ export default function Projects({ posts, initialDisplayPosts, pagination, categ
         pagination={pagination}
         title="Projects"
         categories={categories}
+        token={token}
       />
     </>
   )

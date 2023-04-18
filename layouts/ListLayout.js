@@ -1,20 +1,25 @@
 import Link from '@/components/Link'
 import Tag from '@/components/Tag'
-import siteMetadata from '@/data/siteMetadata'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
 import { useState } from 'react'
 import Pagination from '@/components/Pagination'
 import formatDate from '@/lib/utils/formatDate'
 import MenuItem from '@mui/material/MenuItem'
 import InputLabel from '@mui/material/InputLabel'
-
+import AddProjectModal from '@/components/modals/project/addModal'
+import Fab from '@mui/material/Fab'
+import AddIcon from '@mui/icons-material/Add'
 export default function ListLayout({
   posts,
   title,
   initialDisplayPosts = [],
   pagination = null,
   categories = null,
+  token = null,
 }) {
+  const [open, setOpen] = useState(false)
+  const handleOpen = () => setOpen(true)
+  const handleClose = () => setOpen(false)
   const [searchValue, setSearchValue] = useState('')
   const [searchCategory, setSearchCategory] = useState('')
   const [searchInstructor, setSearchInstructor] = useState('')
@@ -32,6 +37,12 @@ export default function ListLayout({
 
   return (
     <>
+      <AddProjectModal
+        open={open}
+        handleClose={handleClose}
+        token={token}
+        categories={categories}
+      />
       <div className="divide-y divide-gray-200 dark:divide-gray-700">
         <div className="space-y-2 pt-6 pb-8 md:space-y-5">
           <h1 className="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14">
@@ -104,7 +115,14 @@ export default function ListLayout({
               </Select>
             </div>
           </div>
+          <div className="	">
+            <Fab variant="extended" onClick={handleOpen}>
+              <AddIcon sx={{ mr: 1 }} />
+              Add New Project
+            </Fab>
+          </div>
         </div>
+
         <ul>
           {!filteredBlogPosts.length && 'No posts found.'}
           {displayPosts.map((frontMatter) => {

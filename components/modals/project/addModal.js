@@ -7,7 +7,6 @@ import InputLabel from '@mui/material/InputLabel'
 import { TextField } from '@mui/material'
 import { useState } from 'react'
 import { API_URL } from '../../../lib/constants'
-import CategoryDropDown from '../../searchBar/category'
 const style = {
   position: 'absolute',
   top: '50%',
@@ -91,11 +90,25 @@ export default function AddProjectModal({ open, categories, handleClose, token }
               }}
             />
             <div className="mt-5">
-              <CategoryDropDown
-                categories={categories}
-                category={category}
-                setCategory={setCategory}
-              />
+              <InputLabel id="demo-simple-select-label">Category</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={category}
+                label="Category"
+                onChange={(e) => {
+                  setCategory(e.target.value)
+                }}
+              >
+                <MenuItem value={''}>All</MenuItem>
+                {categories.map((c, index) => {
+                  return (
+                    <MenuItem key={index} value={c.type}>
+                      {c.type}
+                    </MenuItem>
+                  )
+                })}
+              </Select>
             </div>
 
             <div className="flex flex-col items-center">

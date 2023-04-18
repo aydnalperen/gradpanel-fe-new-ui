@@ -176,11 +176,12 @@ export default function ApplicationsTable({ data, role }) {
     <TableContainer component={Paper}>
       <Table aria-label="collapsible table">
         <TableBody>
-          {keys.map((k, index) => {
-            return (
-              <ProjectRequestsTable key={index} header={k} requests={requests[k]} role={role} />
-            )
-          })}
+          {keys &&
+            keys.map((k, index) => {
+              return (
+                <ProjectRequestsTable key={index} header={k} requests={requests[k]} role={role} />
+              )
+            })}
         </TableBody>
       </Table>
     </TableContainer>

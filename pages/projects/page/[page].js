@@ -1,7 +1,7 @@
 import { PageSEO } from '@/components/SEO'
 import siteMetadata from '@/data/siteMetadata'
-import { getAllProjects } from '@/lib/mdx'
-import ListLayout from '@/layouts/ListLayout'
+import { getAllProjects, getCategories } from '@/lib/mdx'
+import ListLayout from '../../../layouts/ListLayout'
 import { POSTS_PER_PAGE } from '..'
 
 export async function getServerSideProps(context) {
@@ -11,6 +11,7 @@ export async function getServerSideProps(context) {
     params: { page },
   } = context
   const posts = await getAllProjects(token)
+  const categories = await getCategories(token)
   const pageNumber = parseInt(page)
   const initialDisplayPosts = posts.slice(
     POSTS_PER_PAGE * (pageNumber - 1),
@@ -26,11 +27,12 @@ export async function getServerSideProps(context) {
       posts,
       initialDisplayPosts,
       pagination,
+      categories,
     },
   }
 }
 
-export default function PostPage({ posts, initialDisplayPosts, pagination }) {
+export default function PostPage({ posts, initialDisplayPosts, pagination, categories }) {
   return (
     <>
       <PageSEO title={siteMetadata.title} description={siteMetadata.description} />
@@ -39,6 +41,7 @@ export default function PostPage({ posts, initialDisplayPosts, pagination }) {
         initialDisplayPosts={initialDisplayPosts}
         pagination={pagination}
         title="Projects"
+        categories={categories}
       />
     </>
   )
