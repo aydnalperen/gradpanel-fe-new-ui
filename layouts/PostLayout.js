@@ -11,16 +11,11 @@ import AccessLinksCard from '@/components/startedProject/accessLinksCard'
 import NotesCard from '@/components/notes/notesCard'
 import ProgressCard from '@/components/startedProject/progressCard'
 import CommentsSection from '@/components/startedProject/comments'
-const editUrl = (fileName) => `${siteMetadata.siteRepo}/blob/master/data/blog/${fileName}`
-const discussUrl = (slug) =>
-  `https://mobile.twitter.com/search?q=${encodeURIComponent(
-    `${siteMetadata.siteUrl}/blog/${slug}`
-  )}`
 
 const postDateTemplate = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
 
 export default function PostLayout({ frontMatter, token, isActive }) {
-  const { slug, Profile } = frontMatter
+  const { Profile } = frontMatter
   const [open, setOpen] = useState(false)
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
@@ -35,7 +30,7 @@ export default function PostLayout({ frontMatter, token, isActive }) {
       />
 
       <article>
-        <div className="xl:divide-y xl:divide-gray-200 xl:dark:divide-gray-700">
+        <div className="xl:divide-y  xl:dark:divide-gray-700">
           <header className="pt-6 xl:pb-6">
             <div className="space-y-1 text-center">
               <dl className="space-y-10">
@@ -128,15 +123,17 @@ export default function PostLayout({ frontMatter, token, isActive }) {
                   </ul>
                 </span>
               </div>
-              {isActive && (
-                <>
-                  <MeetingCard isInstructor={true} />
-                  <AccessLinksCard />
-                  <NotesCard />
-                  <ProgressCard isInstructor={true} />
-                  <CommentsSection />
-                </>
-              )}
+              <div>
+                {isActive && (
+                  <>
+                    <MeetingCard isInstructor={true} meeting={frontMatter.Meeting[0]} />
+                    <AccessLinksCard links={frontMatter.Link} />
+                    <NotesCard projectId={frontMatter.ID} />
+                    <ProgressCard />
+                    <CommentsSection comments={frontMatter.Comments} />
+                  </>
+                )}
+              </div>
             </div>
             <footer>
               <div className="pt-4 xl:pt-8">

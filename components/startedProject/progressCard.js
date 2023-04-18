@@ -5,7 +5,7 @@ const reports = [
 ]
 export default function ProgressCard({ isInstructor }) {
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col border-b-4">
       <h1 className="text-l mt-10 font-medium text-gray-700">Progress Reports</h1>
 
       <ol>
@@ -65,7 +65,7 @@ export default function ProgressCard({ isInstructor }) {
         </div>
       )}
       {!isInstructor && (
-        <div className="flex flex-col items-center">
+        <div className="mb-5 flex w-4/5 flex-col items-center">
           <div className="mt-5">
             <label
               htmlFor="title"

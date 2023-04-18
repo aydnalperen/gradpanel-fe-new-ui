@@ -12,8 +12,8 @@ export default function ListLayout({
   posts,
   title,
   initialDisplayPosts = [],
-  pagination,
-  categories,
+  pagination = null,
+  categories = null,
 }) {
   const [searchValue, setSearchValue] = useState('')
   const [searchCategory, setSearchCategory] = useState('')

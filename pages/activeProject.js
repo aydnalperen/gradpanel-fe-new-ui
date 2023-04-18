@@ -6,7 +6,7 @@ export async function getServerSideProps(context) {
   const token = context.req.cookies['GradPanelJWT']
 
   const project = await getActiveProjectByToken(token)
-  console.log(project)
+  console.log(project.Link)
   return { props: { project, token } }
 }
 

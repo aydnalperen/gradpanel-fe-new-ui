@@ -1,7 +1,6 @@
 import { getAllProjects, getCategories } from '@/lib/mdx'
 import siteMetadata from '@/data/siteMetadata'
-import ListLayout from '@/layouts/ListLayout'
-import { PageSEO } from '@/components/SEO'
+import ListLayout from '../layouts/ListLayout'
 export const POSTS_PER_PAGE = 5
 
 export async function getServerSideProps(context) {
@@ -20,7 +19,6 @@ export async function getServerSideProps(context) {
 export default function Projects({ posts, initialDisplayPosts, pagination, categories }) {
   return (
     <>
-      <PageSEO title={`Project - ${siteMetadata.author}`} description={siteMetadata.description} />
       <ListLayout
         posts={posts}
         initialDisplayPosts={initialDisplayPosts}
