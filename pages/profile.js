@@ -1,5 +1,5 @@
 import ProfileCard from '@/components/profile'
-import { getProfileByToken } from '@/lib/mdx'
+import { getProfileByToken } from '@/lib/apiController'
 
 export async function getServerSideProps(context) {
   const token = context.req.cookies['GradPanelJWT']

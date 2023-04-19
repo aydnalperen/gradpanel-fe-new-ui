@@ -1,5 +1,5 @@
 import PageTitle from '@/components/PageTitle'
-import { getApplicationById } from '@/lib/mdx'
+import { getApplicationById } from '@/lib/apiController'
 import ApplicationDetailCard from '@/components/application/applicationDetail'
 export async function getServerSideProps(context) {
   const token = context.req.cookies['GradPanelJWT']

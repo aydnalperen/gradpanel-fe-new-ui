@@ -1,5 +1,5 @@
 import ApplicationsTable from '@/components/application'
-import { getApplicationsByToken } from '@/lib/mdx'
+import { getApplicationsByToken } from '@/lib/apiController'
 
 export async function getServerSideProps(context) {
   const token = context.req.cookies['GradPanelJWT']

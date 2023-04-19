@@ -1,5 +1,5 @@
 import PageTitle from '@/components/PageTitle'
-import { getFileBySlug } from '@/lib/mdx'
+import { getFileBySlug } from '@/lib/apiController'
 import ProjectDetailCard from '@/components/ProjectDetail'
 import PostLayout from '../../layouts/PostLayout'
 export async function getServerSideProps(context) {

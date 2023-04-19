@@ -1,21 +1,20 @@
-import { getActiveProjectByToken } from '@/lib/apiController'
-import PostLayout from '../layouts/PostLayout'
 import PageTitle from '@/components/PageTitle'
-import ListLayout from 'layouts/ListLayout'
-
+import { getActiveProjectByToken } from '@/lib/apiController'
+import PostLayout from '../../layouts/PostLayout'
 export async function getServerSideProps(context) {
   const token = context.req.cookies['GradPanelJWT']
+  const params = context.params
 
-  const project = await getActiveProjectByToken(token)
-  console.log(project)
+  const project = await getActiveProjectByToken(token, params.projectId)
+
   return { props: { project, token } }
 }
 
-export default function ActiveProject({ project, token }) {
+export default function Project({ project, token }) {
   return (
     <>
-      {project.length ? (
-        <ListLayout posts={project} title="Active projects" token={token} isActive={true} />
+      {project != null ? (
+        <PostLayout frontMatter={project} token={token} isActive={true} />
       ) : (
         <div className="mt-24 text-center">
           <PageTitle>

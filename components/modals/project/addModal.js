@@ -22,7 +22,6 @@ const style = {
 }
 
 export default function AddProjectModal({ open, categories, handleClose, token }) {
-  console.log(categories)
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const [capacity, setCapacity] = useState('0')
@@ -90,27 +89,29 @@ export default function AddProjectModal({ open, categories, handleClose, token }
                 setCapacity(e.target.value)
               }}
             />
-            <div className="mt-5">
-              <InputLabel id="demo-simple-select-label">Category</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={category}
-                label="Category"
-                onChange={(e) => {
-                  setCategory(e.target.value)
-                }}
-              >
-                <MenuItem value={''}>All</MenuItem>
-                {categories.map((c, index) => {
-                  return (
-                    <MenuItem key={index} value={c}>
-                      {c.type}
-                    </MenuItem>
-                  )
-                })}
-              </Select>
-            </div>
+            {categories && (
+              <div className="mt-5">
+                <InputLabel id="demo-simple-select-label">Category</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={category}
+                  label="Category"
+                  onChange={(e) => {
+                    setCategory(e.target.value)
+                  }}
+                >
+                  <MenuItem value={''}>All</MenuItem>
+                  {categories.map((c, index) => {
+                    return (
+                      <MenuItem key={index} value={c}>
+                        {c.type}
+                      </MenuItem>
+                    )
+                  })}
+                </Select>
+              </div>
+            )}
 
             <div className="flex flex-col items-center">
               <button

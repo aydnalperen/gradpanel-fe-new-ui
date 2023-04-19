@@ -1,4 +1,4 @@
-import { getAllProjects, getCategories } from '@/lib/mdx'
+import { getAllProjects, getCategories } from '@/lib/apiController'
 import siteMetadata from '@/data/siteMetadata'
 import ListLayout from '../layouts/ListLayout'
 export const POSTS_PER_PAGE = 5

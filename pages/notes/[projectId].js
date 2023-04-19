@@ -1,4 +1,4 @@
-import { getNotesByProject } from '@/lib/mdx'
+import { getNotesByProject } from '@/lib/apiController'
 import PageTitle from '@/components/PageTitle'
 import NotesLayout from '../../layouts/NotesLayout'
 

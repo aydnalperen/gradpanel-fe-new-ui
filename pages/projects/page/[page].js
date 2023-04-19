@@ -1,6 +1,6 @@
 import { PageSEO } from '@/components/SEO'
 import siteMetadata from '@/data/siteMetadata'
-import { getAllProjects, getCategories } from '@/lib/mdx'
+import { getAllProjects, getCategories } from '@/lib/apiController'
 import ListLayout from '../../../layouts/ListLayout'
 import { POSTS_PER_PAGE } from '..'
 
