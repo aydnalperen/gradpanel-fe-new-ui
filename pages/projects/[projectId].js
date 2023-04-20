@@ -1,12 +1,11 @@
 import PageTitle from '@/components/PageTitle'
-import { getFileBySlug } from '@/lib/apiController'
-import ProjectDetailCard from '@/components/ProjectDetail'
+import { getProjectById } from '@/lib/apiController'
 import PostLayout from '../../layouts/PostLayout'
 export async function getServerSideProps(context) {
   const token = context.req.cookies['GradPanelJWT']
   const params = context.params
 
-  const post = await getFileBySlug(token, params.projectId)
+  const post = await getProjectById(token, params.projectId)
 
   return { props: { post, token } }
 }

@@ -7,18 +7,26 @@ import InputLabel from '@mui/material/InputLabel'
 import { TextField } from '@mui/material'
 import { useState } from 'react'
 import { API_URL } from '../../../lib/constants'
+
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+
 const style = {
   position: 'absolute',
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 800,
+  width: 320,
   bgcolor: 'background.paper',
   border: '2px solid #000',
   boxShadow: 24,
   p: 4,
   maxHeight: 600,
   overflow: 'auto',
+}
+
+if (typeof window !== 'undefined' && window.matchMedia('(max-width: 600px)').matches) {
+  style.width = '90%' // Set a different width for mobile devices
 }
 
 export default function AddProjectModal({ open, categories, handleClose, token }) {
@@ -47,6 +55,8 @@ export default function AddProjectModal({ open, categories, handleClose, token }
     }
     let response = await fetch(endpoint, options)
 
+    if (response.status == 200) toast.success('Project created!')
+    else toast.error('Unknown error!')
     return response
   }
   return (
@@ -59,9 +69,10 @@ export default function AddProjectModal({ open, categories, handleClose, token }
       >
         <Box sx={style}>
           <div>
+            <ToastContainer />
             <TextField
               id="fullWidth"
-              variant="filled"
+              variant="standard"
               label="title"
               fullWidth
               onChange={(e) => {
@@ -70,7 +81,7 @@ export default function AddProjectModal({ open, categories, handleClose, token }
             />
             <TextField
               id="fullWidth"
-              variant="filled"
+              variant="standard"
               label="description"
               fullWidth
               multiline
@@ -81,7 +92,7 @@ export default function AddProjectModal({ open, categories, handleClose, token }
             />
             <TextField
               id="fullWidth"
-              variant="filled"
+              variant="standard"
               label="Number of students"
               fullWidth
               type="number"
@@ -117,9 +128,9 @@ export default function AddProjectModal({ open, categories, handleClose, token }
               <button
                 type="button"
                 onClick={addProjectHandler}
-                className="mt-5 w-1/6 transform rounded bg-gray-700 font-medium text-white shadow transition hover:-translate-y-0.5 hover:bg-gray-800 hover:shadow-lg"
+                className="mt-5 w-1/6 transform rounded bg-gray-700 p-2 text-white shadow transition hover:-translate-y-0.5 hover:bg-gray-800 hover:shadow-lg"
               >
-                Add New Project
+                Add
               </button>
             </div>
           </div>

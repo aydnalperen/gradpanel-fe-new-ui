@@ -70,6 +70,24 @@ export default function UpdateMeetingModal({ open, handleClose, meeting, token }
             placeholder={text}
             onChange={(e) => setText(e.target.value)}
           />
+          <TextField
+            id="fullWidth"
+            variant="filled"
+            label="Day"
+            fullWidth
+            defaultValue={text}
+            placeholder={text}
+            onChange={(e) => setText(e.target.value)}
+          />
+          <TextField
+            id="fullWidth"
+            variant="filled"
+            label="Hour"
+            fullWidth
+            defaultValue={text}
+            placeholder={text}
+            onChange={(e) => setText(e.target.value)}
+          />
           <div className="flex">
             <button
               type="button"

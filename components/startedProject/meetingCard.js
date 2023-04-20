@@ -11,6 +11,10 @@ export default function MeetingCard({ isInstructor, meeting }) {
       <div className="flex w-full flex-col justify-between border-b-4 py-5 sm:w-3/5 sm:flex-row">
         <div className="flex w-full items-center justify-between">
           <h5 className="mb-1 text-xl font-bold text-gray-900 ">{meeting.name}</h5>
+          <div className="flex flex-col items-center">
+            <h5 className="mb-1 text-sm font-bold text-gray-700 ">{meeting.weekday}</h5>
+            <h5 className="mb-1 text-sm font-bold text-gray-700 ">{meeting.hour}</h5>
+          </div>
           <a
             href={meeting.link}
             target="_blank"

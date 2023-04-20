@@ -1,44 +1,31 @@
 import SocialIcon from '@/components/social-icons'
 import Image from '@/components/Image'
-import { PageSEO } from '@/components/SEO'
 
 export default function AuthorLayout({ frontMatter }) {
-  const { firstName, lastName, profileImage, biography, department, major, number, gpa, User } =
-    frontMatter
+  const { Profile, CreatedAt, title, text, Project } = frontMatter
 
   return (
     <>
       <div className="divide-y divide-gray-200 dark:divide-gray-700">
         <div className="space-y-2 pt-6 pb-8 md:space-y-5">
-          <h1 className="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14">
-            Profile
+          <h1 className="text-xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-2xl sm:leading-10 md:text-4xl md:leading-14">
+            {title}
           </h1>
         </div>
         <div className="items-start space-y-2 xl:grid xl:grid-cols-3 xl:gap-x-8 xl:space-y-0">
           <div className="flex flex-col items-center pt-8">
             <Image
-              src={profileImage}
+              src={Profile.profileImage}
               alt="avatar"
-              width="192px"
-              height="192px"
+              width="144px"
+              height="144px"
               className="h-48 w-48 rounded-full"
             />
             <h3 className="pt-4 pb-2 text-2xl font-bold leading-8 tracking-tight">
-              {firstName + ' ' + lastName}
+              {Profile.firstName + ' ' + Profile.lastName}
             </h3>
-            <div className="text-gray-500 dark:text-gray-400">{number}</div>
-            <div className="text-gray-500 dark:text-gray-400">{gpa}</div>
-            <div className="text-gray-500 dark:text-gray-400">{department}</div>
-            <div className="flex space-x-3 pt-6">
-              <SocialIcon kind="mail" href={`mailto:${User.mail}`} />
-              {/* <SocialIcon kind="github" href={github} />
-              <SocialIcon kind="linkedin" href={linkedin} />
-              <SocialIcon kind="twitter" href={twitter} /> */}
-            </div>
           </div>
-          <div className="prose max-w-none pt-8 pb-8 dark:prose-dark xl:col-span-2">
-            {biography}
-          </div>
+          <div className="prose max-w-none pt-8 pb-8 dark:prose-dark xl:col-span-2">{text}</div>
         </div>
       </div>
     </>

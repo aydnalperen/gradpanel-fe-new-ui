@@ -22,15 +22,14 @@ export default function ListLayout({
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
   const [searchValue, setSearchValue] = useState('')
-  const [searchCategory, setSearchCategory] = useState('')
-  const [searchInstructor, setSearchInstructor] = useState('')
+  const [searchCategory, setSearchCategory] = useState({ ID: 0, type: '' })
   const filteredBlogPosts = posts.filter((frontMatter) => {
     const searchContent = frontMatter.title + frontMatter.description
     const isSearchValueMatched =
       searchValue === '' || searchContent.toLowerCase().includes(searchValue.toLowerCase())
     const isSearchCategoryMatched =
-      searchCategory === '' ||
-      (frontMatter.Category && frontMatter.Category.type === searchCategory)
+      searchCategory.type === '' ||
+      (frontMatter.Category && frontMatter.Category.type === searchCategory.type)
     return isSearchValueMatched && isSearchCategoryMatched
   })
 
@@ -91,38 +90,16 @@ export default function ListLayout({
                       setSearchCategory(e.target.value)
                     }}
                   >
-                    <MenuItem value={''}>All</MenuItem>
+                    <MenuItem value={{ ID: 0, type: '' }}>All</MenuItem>
                     {categories.map((c, index) => {
                       return (
-                        <MenuItem key={index} value={c.type}>
+                        <MenuItem key={index} value={c}>
                           {c.type}
                         </MenuItem>
                       )
                     })}
                   </Select>
                 </div>
-
-                {/* <div className="mt-5">
-      <InputLabel id="demo-simple-select-label-2">Instructor</InputLabel>
-      <Select
-        labelId="demo-simple-select-label-2"
-        id="demo-simple-select-2"
-        value={searchInstructor}
-        label="Instructor"
-        onChange={(e) => {
-          setSearchInstructor(e.target.value)
-        }}
-      >
-        <MenuItem value={''}>All</MenuItem>
-        {categories.map((c, index) => {
-          return (
-            <MenuItem key={index} value={c.type}>
-              {c.type}
-            </MenuItem>
-          )
-        })}
-      </Select>
-    </div> */}
               </div>
               <div className="	">
                 <Fab variant="extended" onClick={handleOpen}>
@@ -155,9 +132,22 @@ export default function ListLayout({
                   <div className="space-y-3 xl:col-span-3">
                     <div>
                       <h3 className="text-2xl font-bold leading-8 tracking-tight">
-                        <Link href={`/projects/${ID}`} className="text-gray-900 dark:text-gray-100">
-                          {title}
-                        </Link>
+                        {!isActive && (
+                          <Link
+                            href={`/projects/${ID}`}
+                            className="text-gray-900 dark:text-gray-100"
+                          >
+                            {title}
+                          </Link>
+                        )}
+                        {isActive && (
+                          <Link
+                            href={`/activeProject/${ID}`}
+                            className="text-gray-900 dark:text-gray-100"
+                          >
+                            {title}
+                          </Link>
+                        )}
                       </h3>
                       <div className="flex flex-wrap">
                         <Tag text={Category.type} />

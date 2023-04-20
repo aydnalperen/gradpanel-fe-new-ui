@@ -1,11 +1,11 @@
 import PageTitle from '@/components/PageTitle'
-import { getActiveProjectByToken } from '@/lib/apiController'
+import { getProjectById } from '@/lib/apiController'
 import PostLayout from '../../layouts/PostLayout'
 export async function getServerSideProps(context) {
   const token = context.req.cookies['GradPanelJWT']
   const params = context.params
 
-  const project = await getActiveProjectByToken(token, params.projectId)
+  const project = await getProjectById(token, params.projectId)
 
   return { props: { project, token } }
 }

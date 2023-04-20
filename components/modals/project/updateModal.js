@@ -4,16 +4,21 @@ import Box from '@mui/material/Box'
 import Modal from '@mui/material/Modal'
 import { TextField } from '@mui/material'
 import { API_URL } from '../../../lib/constants'
+
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+
 const style = {
   position: 'absolute',
   top: '50%',
   left: '50%',
+  width: 360,
   transform: 'translate(-50%, -50%)',
   bgcolor: 'background.paper',
   border: '2px solid #000',
   boxShadow: 24,
   p: 4,
-  maxHeight: '800',
+  maxHeight: 600,
   overflow: 'auto',
 }
 
@@ -47,6 +52,9 @@ export default function UpdateProjectModal({ open, handleClose, project, token }
     }
     let response = await fetch(endpoint, options)
 
+    if (response.status == 200) toast.success('Project updated!')
+    else toast.error('Unknown error!')
+
     return response
   }
   const addSourceHandler = async () => {
@@ -67,6 +75,9 @@ export default function UpdateProjectModal({ open, handleClose, project, token }
       body: JSON.stringify(body),
     }
     let response = await fetch(endpoint, options)
+
+    if (response.status == 200) toast.success('Source added!')
+    else toast.error('Unknown error!')
 
     return response
   }
@@ -89,6 +100,9 @@ export default function UpdateProjectModal({ open, handleClose, project, token }
     }
     let response = await fetch(endpoint, options)
 
+    if (response.status == 200) toast.success('Requirement added!')
+    else toast.error('Unknown error!')
+
     return response
   }
   const deleteSourceHandler = async (id) => {
@@ -108,6 +122,9 @@ export default function UpdateProjectModal({ open, handleClose, project, token }
       body: JSON.stringify(body),
     }
     let response = await fetch(endpoint, options)
+
+    if (response.status == 200) toast.success('Source deleted!')
+    else toast.error('Unknown error!')
 
     return response
   }
@@ -129,6 +146,9 @@ export default function UpdateProjectModal({ open, handleClose, project, token }
     }
     let response = await fetch(endpoint, options)
 
+    if (response.status == 200) toast.success('Requirement deleted!')
+    else toast.error('Unknown error!')
+
     return response
   }
   return (
@@ -146,10 +166,11 @@ export default function UpdateProjectModal({ open, handleClose, project, token }
       >
         <Box sx={style}>
           <div>
+            <ToastContainer />
             <TextField
               defaultValue={project.title}
               id="fullWidth"
-              variant="filled"
+              variant="standard"
               label="title"
               fullWidth
               onChange={(e) => {
@@ -159,7 +180,7 @@ export default function UpdateProjectModal({ open, handleClose, project, token }
             <TextField
               defaultValue={project.description}
               id="fullWidth"
-              variant="filled"
+              variant="standard"
               label="description"
               fullWidth
               multiline
@@ -171,7 +192,7 @@ export default function UpdateProjectModal({ open, handleClose, project, token }
             <TextField
               defaultValue={project.capacity}
               id="fullWidth"
-              variant="filled"
+              variant="standard"
               label="Number of students"
               fullWidth
               type="number"
@@ -183,7 +204,7 @@ export default function UpdateProjectModal({ open, handleClose, project, token }
               <button
                 type="button"
                 onClick={updateProjectHandler}
-                className="mt-5 w-1/6 transform rounded bg-gray-700 font-medium text-white shadow transition hover:-translate-y-0.5 hover:bg-gray-800 hover:shadow-lg"
+                className="font-small mt-5 w-1/4 transform rounded bg-gray-700 text-white shadow transition hover:-translate-y-0.5 hover:bg-gray-800 hover:shadow-lg"
               >
                 Update
               </button>
@@ -198,7 +219,7 @@ export default function UpdateProjectModal({ open, handleClose, project, token }
                 <TextField
                   defaultValue="Add new"
                   id="fullWidth"
-                  variant="filled"
+                  variant="standard"
                   fullWidth
                   size="small"
                   onChange={(e) => {
@@ -208,9 +229,22 @@ export default function UpdateProjectModal({ open, handleClose, project, token }
                 <button
                   type="button"
                   onClick={addSourceHandler}
-                  className="mx-auto ml-5 mr-5 w-1/6 transform rounded bg-gray-700 font-medium text-white shadow transition hover:-translate-y-0.5 hover:bg-gray-800 hover:shadow-lg"
+                  className="w-1/6 transform rounded bg-gray-700 p-2 text-white shadow transition hover:-translate-y-0.5 hover:bg-gray-800 hover:shadow-lg"
                 >
-                  Add
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="h-6 w-6"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
                 </button>
               </div>
               <ul className="ml-10 list-decimal">
@@ -222,7 +256,7 @@ export default function UpdateProjectModal({ open, handleClose, project, token }
                           <TextField
                             defaultValue={s.link}
                             id="fullWidth"
-                            variant="filled"
+                            variant="standard"
                             fullWidth
                             size="small"
                           />
@@ -231,9 +265,22 @@ export default function UpdateProjectModal({ open, handleClose, project, token }
                             onClick={() => {
                               deleteSourceHandler(s.ID)
                             }}
-                            className="mx-auto ml-5 mr-5 w-1/6 transform rounded bg-gray-700 font-medium text-white shadow transition hover:-translate-y-0.5 hover:bg-gray-800 hover:shadow-lg"
+                            className="ml-2 w-1/6 transform rounded bg-gray-700 p-2 text-white shadow transition hover:-translate-y-0.5 hover:bg-gray-800 hover:shadow-lg"
                           >
-                            Delete
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              strokeWidth={1.5}
+                              stroke="currentColor"
+                              className="h-6 w-6"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                              />
+                            </svg>
                           </button>
                         </div>
                       </li>
@@ -249,7 +296,7 @@ export default function UpdateProjectModal({ open, handleClose, project, token }
                 <TextField
                   defaultValue="Add new"
                   id="fullWidth"
-                  variant="filled"
+                  variant="standard"
                   fullWidth
                   size="small"
                   onChange={(e) => {
@@ -259,9 +306,22 @@ export default function UpdateProjectModal({ open, handleClose, project, token }
                 <button
                   type="button"
                   onClick={addRequirementHandler}
-                  className="mx-auto ml-5 mr-5 w-1/6 transform rounded bg-gray-700 font-medium text-white shadow transition hover:-translate-y-0.5 hover:bg-gray-800 hover:shadow-lg"
+                  className="w-1/6 transform rounded bg-gray-700 p-2 text-white shadow transition hover:-translate-y-0.5 hover:bg-gray-800 hover:shadow-lg"
                 >
-                  Add
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="h-6 w-6"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
                 </button>
               </div>
               <ul className="ml-10 list-decimal">
@@ -273,7 +333,7 @@ export default function UpdateProjectModal({ open, handleClose, project, token }
                           <TextField
                             defaultValue={s.description}
                             id="fullWidth"
-                            variant="filled"
+                            variant="standard"
                             fullWidth
                             size="small"
                           />
@@ -283,9 +343,22 @@ export default function UpdateProjectModal({ open, handleClose, project, token }
                             onClick={() => {
                               deleteRequirementHandler(s.ID)
                             }}
-                            className="mx-auto ml-5 mr-5 w-1/6 transform rounded bg-gray-700 font-medium text-white shadow transition hover:-translate-y-0.5 hover:bg-gray-800 hover:shadow-lg"
+                            className="ml-2 w-1/6 transform rounded bg-gray-700 p-2 text-white shadow transition hover:-translate-y-0.5 hover:bg-gray-800 hover:shadow-lg"
                           >
-                            Delete
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              strokeWidth={1.5}
+                              stroke="currentColor"
+                              className="h-6 w-6"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                              />
+                            </svg>
                           </button>
                         </div>
                       </li>
